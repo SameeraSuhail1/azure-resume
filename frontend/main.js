@@ -2,10 +2,11 @@ window.addEventListener('DOMContentLoaded' , (event) =>{
     getVisitCount();
 })
 
-const functionApi  = 'http://localhost:7071/api/HttpTriggerCounter2';
+const functionApiURL = "https://counterfunc.azurewebsites.net/api/HttpTriggerCounter2"
+const functionApiLocal  = 'http://localhost:7071/api/HttpTriggerCounter2';
 const getVisitCount = () => {
     let count = 30;
-    fetch(functionApi).then(response => {
+    fetch(functionApiURL).then(response => {
         return response.json()
         //return response
     }).then(response =>{
