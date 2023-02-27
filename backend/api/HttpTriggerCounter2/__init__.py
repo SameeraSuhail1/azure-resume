@@ -32,19 +32,18 @@ import os
 
 def main(req: func.HttpRequest, azureresume: func.DocumentList) -> str:
     if not azureresume:
-        logging.warning("ToDo item not found")
+        logging.warning("azureresume not found")
     else:
-        logging.info("Found ToDo item, Description=%s",
+        logging.info("Found azureresume, Description=%s",
                      azureresume[0]['visitcount'])
         
         current_count = azureresume[0]['visitcount']
         updated_count = azureresume[0]['visitcount'] +1
 
 
-    with open('local.settings.json') as f:
-        data = json.load(f)
-
-    CONN_STR = data["Values"]["CosmosDBConnection"]
+         
+    CONN_STR = os.environ['CosmosDBConnection']
+    #CONN_STR = "AccountEndpoint=https://azure-resume-nosql.documents.azure.com:443/;AccountKey=sWp3MWftphK90KqlM8QlJM1ahQQS9efZBPvQDdXltbeorKKIVhdBpbr1DfJYXUVyEf5c3JCZpMiDACDb8B0jLQ==;"
     client = CosmosClient.from_connection_string(conn_str=CONN_STR)
     database_name = 'AzureResume'
     database = client.get_database_client(database_name)
@@ -57,5 +56,3 @@ def main(req: func.HttpRequest, azureresume: func.DocumentList) -> str:
         }
     )
     return str(current_count)
-    
-
