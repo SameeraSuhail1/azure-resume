@@ -56,10 +56,6 @@ def main(req: func.HttpRequest, azureresume: func.DocumentList) -> str:
             'visitcount': updated_count
         }
     )
-
-
-
-
     return str(current_count)
     
 
