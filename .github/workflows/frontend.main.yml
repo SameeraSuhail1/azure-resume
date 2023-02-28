@@ -2,7 +2,7 @@ name: static_website
 
 on:
     push:
-        branches: [ master ]
+        branches: [ main ]
         paths:
         - 'frontend/**'
 
