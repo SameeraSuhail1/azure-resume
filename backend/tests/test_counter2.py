@@ -6,6 +6,7 @@ import azure.functions as func
 from  api import HttpTriggerCounter2
 import logging
 from azure.cosmos import CosmosClient
+import pytest
 
 class TestFunction(unittest.TestCase):
     def test_counter2_function(self):
