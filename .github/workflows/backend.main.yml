@@ -35,11 +35,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt --target=".python_packages/lib/site-packages"
         popd
-        
+
     - name: 'Run Unit Test'
       shell: pwsh
       run: |
         pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/tests'
+        pip install -r requirements.txt --target=".python_packages/lib/site-packages"
         python -m pytest tests
 
     - name: 'Run Azure Functions action'
