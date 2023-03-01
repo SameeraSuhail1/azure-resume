@@ -29,7 +29,7 @@ import azure.functions as func
 import json
 from azure.cosmos import CosmosClient
 import os
-#test comment 5
+#test comment 6
 
 def main(req: func.HttpRequest, azureresume: func.DocumentList) -> str:
     if not azureresume:
