@@ -1,0 +1,48 @@
+name: Deploy backend_azure_function
+
+on:
+  push:
+  branches: [ main ]
+        paths:
+        - 'backend/**'
+
+env:
+  AZURE_FUNCTIONAPP_NAME: HttpTriggerCounter2 # set this to your application's name
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: 'backend'   # set this to the path to your web app project, defaults to the repository root
+  PYTHON_VERSION: '3.8'                 # set this to the Python version to use (supports 3.6, 3.7, 3.8)
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 'Checkout GitHub action'
+      uses: actions/checkout@v2
+
+    - name: 'login via azure cli'
+      uses: azure/login@v1
+      with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Setup Python ${{ env.PYTHON_VERSION }} Environment
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: 'Resolve Project Dependencies Using Pip'
+      shell: bash
+      run: |
+        pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/api'
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt --target=".python_packages/lib/site-packages"
+        popd
+    - name: 'Run Unit Test'
+      shell: pwsh
+      run: |
+      ushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/tests'
+        python -m pytest tests
+
+    - name: 'Run Azure Functions action'
+      uses: Azure/functions-action@v1
+      with:
+        app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+        package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/api/output'
