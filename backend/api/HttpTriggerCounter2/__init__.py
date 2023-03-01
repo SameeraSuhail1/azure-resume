@@ -41,9 +41,13 @@ def main(req: func.HttpRequest, azureresume: func.DocumentList) -> str:
         updated_count = azureresume[0]['visitcount'] +1
 
 
-         
-    CONN_STR = os.environ['CosmosDBConnection']
-    #CONN_STR = "AccountEndpoint=https://azure-resume-nosql.documents.azure.com:443/;AccountKey=sWp3MWftphK90KqlM8QlJM1ahQQS9efZBPvQDdXltbeorKKIVhdBpbr1DfJYXUVyEf5c3JCZpMiDACDb8B0jLQ==;"
+    try:         #if running locally from backend folder
+        with open('api/local.settings.json') as f:
+            data = json.load(f)
+            CONN_STR = data["Values"]["CosmosDBConnection"]
+    except:         #if running on azure
+        CONN_STR = os.environ['CosmosDBConnection']
+
     client = CosmosClient.from_connection_string(conn_str=CONN_STR)
     database_name = 'AzureResume'
     database = client.get_database_client(database_name)
@@ -55,4 +59,7 @@ def main(req: func.HttpRequest, azureresume: func.DocumentList) -> str:
             'visitcount': updated_count
         }
     )
+
+
+
     return str(current_count)
