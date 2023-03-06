@@ -3,7 +3,7 @@
   "Values": {
     "AzureWebJobsStorage": "",
     "FUNCTIONS_WORKER_RUNTIME": "python",
-    "CosmosDBConnection": "AccountEndpoint=https://azure-resume-nosql.documents.azure.com:443/;AccountKey=sWp3MWftphK90KqlM8QlJM1ahQQS9efZBPvQDdXltbeorKKIVhdBpbr1DfJYXUVyEf5c3JCZpMiDACDb8B0jLQ==;"
+    "CosmosDBConnection": "AccountEndpoint=https://azure-resume-nosql.documents.azure.com:443/;AccountKey=k2iYQvEK3do0UTBrw01dbuC5Q6GkCPdC1jvSWAz9Nhm4Tj3wH4hH09s2vsAD1yX9fg9eJ3KFj5qEACDbRUrq0A==;"
   },
   "Host":
   {
